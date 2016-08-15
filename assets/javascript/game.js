@@ -1,4 +1,5 @@
 var obiWanKenobe = {
+	identity: 'obiWanKenobe',
 	name: 'Obi-Wan Kenobe',
 	hp: 120,
 	attack: 8,
@@ -14,6 +15,7 @@ var obiWanKenobe = {
 }
 
 var lukeSkywalker = {
+	identity: 'lukeSkywalker',
 	name: 'Luke Skywalker',
 	hp: 100,
 	attack: 10,
@@ -29,6 +31,7 @@ var lukeSkywalker = {
 }
 
 var darthSidious = {
+	identity: 'darthSidious',
 	name: 'Dark Sidious',
 	hp: 150,
 	attack: 6,
@@ -44,6 +47,7 @@ var darthSidious = {
 }
 
 var darthMaul = {
+	identity: 'darthMaul',
 	name: 'Darth Maul',
 	hp: 180,
 	attack: 5,
@@ -58,13 +62,30 @@ var darthMaul = {
 	}
 }
 
+var charArray = [obiWanKenobe, lukeSkywalker, darthSidious, darthMaul]
 
+function selectCharacter(input) {
+	$('#'+input).appendTo('#your-character')
+	
+	for (char in charArray) {
+		if (charArray[char].identity == input) {
+			charArray[char].enemy = false
+		}
+	}
+
+	for (char in charArray) {
+		if (charArray[char].enemy == true){
+			$('#' + charArray[char].identity).appendTo('#enemies')
+		}
+	}
+}
 
 
 $(document).ready(function(){
 	$('img').on('click', function(event){
 		input = event.target.id
 		console.log(input)
+		selectCharacter(input)
 	})
 })
 
