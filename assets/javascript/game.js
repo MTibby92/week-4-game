@@ -64,9 +64,11 @@ var darthMaul = {
 
 var charArray = [obiWanKenobe, lukeSkywalker, darthSidious, darthMaul]
 
+
+
 function selectCharacter(input) {
 	$('#'+input).appendTo('#your-character')
-	
+
 	for (char in charArray) {
 		if (charArray[char].identity == input) {
 			charArray[char].enemy = false
@@ -80,12 +82,44 @@ function selectCharacter(input) {
 	}
 }
 
+function selectEnemy(input){
+	$('#'+input).appendTo('#defender')
+}
+
+var yourChar=true;
+
 
 $(document).ready(function(){
 	$('img').on('click', function(event){
 		input = event.target.id
-		console.log(input)
-		selectCharacter(input)
+		if (obiWanKenobe.enemy == true && lukeSkywalker.enemy == true && darthSidious.enemy == true && darthMaul.enemy == true) {
+			selectCharacter(input)
+		}else if ((obiWanKenobe.enemy == false || lukeSkywalker.enemy == false || darthSidious.enemy == false || darthMaul.enemy == false) && $('#defender').has('img').length == 0) {
+			selectEnemy(event.target.id)
+		}
+	})
+	$('button').on('click', function(event){
+		inputB = event.target.value
+		//console.log('button clicked')
+		//console.log(inputB)
+		//console.log(event.target.id)
+		if (inputB == 'attack'){
+			var good = eval($('#your-character img').first().attr('id'))
+			var bad = eval($('#defender img').first().attr('id'))
+			if (good.hp <= 0) {
+				$('#defender').append('<p>You have been defeated...GAME OVER</p>')
+				$('#defender').append('<button id="resetButton" value="reset">Reset</button>')
+			}else if (bad.hp <=0) {
+				$('#defender').remove('#' + bad.identity)
+				$('#defender').append('<p>You have defeated ' + bad.name + ', you can choose to fight another enemey</p>')
+			}else {
+				good.attackEnemy(bad)
+				bad.counterPlayer(good)
+				console.log(good.hp)
+				console.log(good.attack)
+				console.log(bad.hp)
+			}
+		}
 	})
 })
 
