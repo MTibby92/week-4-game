@@ -1,17 +1,33 @@
 .container {
+	display: flex;
+	flex-wrap: wrap;
+	flex-flow: column;
+}
+
+h1 {
 
 }
 
 #select {
+	display: flex;
+	flex-wrap: wrap;
+	flex-flow: row;
+	align-content: flex-start;
 
 }
 
 #your-character {
-
+	display: flex;
+	flex-wrap: wrap;
+	flex-flow: row;
+	align-content: flex-start;
 }
 
 #enemies {
-
+	display: flex;
+	flex-wrap: wrap;
+	flex-flow: row;
+	align-content: flex-start;
 }
 
 #options {
@@ -19,5 +35,12 @@
 }
 
 #defender {
-	
+	display: flex;
+	flex-wrap: wrap;
+	flex-flow: column;
+	align-content: flex-start;
+}
+
+.character {
+	margin-right: 30px;
 }
