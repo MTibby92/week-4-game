@@ -86,8 +86,42 @@ function selectEnemy(input){
 	$('#'+input).appendTo('#defender')
 }
 
+function reset() {
+	console.log('reset function has begun')
+	$('#your-character').empty()
+	$('#enemies').empty()
+	$('#attackButton').prop("disabled",false)
+	$('#defender').empty()
+	$('#attackUpdate').empty()
+	$('#counterUpdate').empty()
+
+	$('#select').append('<div id="obiWanKenobe" class="character"><p>Obi-Wan Kenobe</p><img src="./assets/images/obiwan.jpg" alt="Obi-Wan Kenobe image"><p id="obiWanKenobe-hp"></p></div>')
+	$('#select').append('<div id="lukeSkywalker" class="character"><p>Luke Skywalker</p><img src="./assets/images/skywalker.jpeg" alt="Luke Skywalker image"><p id="lukeSkywalker-hp"></p></div>')
+	$('#select').append('<div id="darthSidious" class="character"><p>Darth Sidious</p><img src="./assets/images/sidious.jpg" alt="Darth Sidious image"><p id="darthSidious-hp"></p></div>')
+	$('select').append('<div id="darthMaul" class="character"><p>Darth Maul</p><img src="./assets/images/maul.jpeg" alt="Darth Maul image"><p id="darthMaul-hp"></p></div>')
+
+	$('#resetButton').remove()
+
+	obiWanKenobe.hp = 120
+	obiWanKenobe.attack = 8
+	obiWanKenobe.enemy = true
+
+	lukeSkywalker.hp = 100
+	lukeSkywalker.attack = 10
+	lukeSkywalker.enemy = true
+
+	darthSidious.hp = 150
+	darthSidious.attack = 6
+	darthSidious.enemy = true
+
+	darthMaul.hp = 180
+	darthMaul.attack = 5
+	darthMaul.enemy = true
+}
+
 
 $(document).ready(function(){
+	//code for displaying the hp for each character in the html initally
 	$('#obiWanKenobe-hp').html(obiWanKenobe.hp)
 	$('#lukeSkywalker-hp').html(lukeSkywalker.hp)
 	$('#darthSidious-hp').html(darthSidious.hp)
@@ -95,12 +129,15 @@ $(document).ready(function(){
 
 	$('img').on('click', function(event){
 		console.log($(event.target).parent().attr('id'))
+		//when image is clicked, stores the id of the div container in input
 		input = $(event.target).parent().attr('id')
 		console.log(input)
+		//checks if a character has been selected yet; if not runs the select character function
 		if (obiWanKenobe.enemy == true && lukeSkywalker.enemy == true && darthSidious.enemy == true && darthMaul.enemy == true) {
 			$('#attackUpdate').empty()
 			$('#counterUpdate').empty()
 			selectCharacter(input)
+		//checks if there is a character selected and if the defender div is empty; if so allows you to select an enemy to fight
 		}else if ((obiWanKenobe.enemy == false || lukeSkywalker.enemy == false || darthSidious.enemy == false || darthMaul.enemy == false) && $('#defender').has('img').length == 0) {
 			// console.log('in the select enemy block')
 			$('#attackUpdate').empty()
@@ -110,23 +147,37 @@ $(document).ready(function(){
 		}
 	})
 	$('button').on('click', function(event){
+		//checks the value of the button selected and stores in inputB
 		inputB = event.target.value
 		// console.log('button clicked')
-		// console.log(inputB)
-		// console.log(event.target.id)
+		console.log(inputB)
+		console.log(event.target.id)
+		//checks if the attack button was selected and if there is a character in the defender div; if so enters the fighting loop
 		if (inputB == 'attack' && $('#defender').has('div').length > 0){
+			//stores the selected string and converts it to the object it refers to
 			var good = eval($('#your-character div').first().attr('id'))
 			var bad = eval($('#defender div').first().attr('id'))
+			//checks if your character has an hp left; if not you lose
 			if (good.hp <= 0) {
 				$('#attackUpdate').remove()
 				$('#counterUpdate').remove()
 				$('#defender').append('<p>You have been defeated...GAME OVER</p>')
-				$('#defender').append('<button id="resetButton" value="reset">Reset</button>')
+				$('.container').append('<button id="resetButton" value="reset">Reset</button>')
+			//checks if the enemy has an hp; if not tells you you defeated them and removes the character from the defender div
 			}else if (bad.hp <=0) {
 				$('#attackUpdate').empty()
 				$('#counterUpdate').empty()
 				$('#' + bad.identity).remove()
 				$('#defender').append('<p id="defeatedMessage">You have defeated ' + bad.name + ', you can choose to fight another enemey</p>')
+			//checks if there is still an enemy in the defender div and if there are still any enemies left to choose from; if there aren't any in either then displays the win messaging and the reset button
+			}else if ($('#enemies').has('div').length == 0 && $('#defender').has('div').length ==0) {
+					$('#attackUpdate').empty()
+					$('#counterUpdate').empty()
+					$('#' + bad.identity).hide()
+					$('#defender').append('<p>You won!!!! GAME OVER!!!!!</p>')
+					$('.container').append('<button id="resetButton" value="reset">Reset</button>')
+					$('#attackButton').prop("disabled",true)
+			//otherwise, the attack functionality will run
 			}else {
 				$('#attackUpdate').html('You attacked ' + bad.name + ' for ' + good.attack + ' damage.')
 				$('#counterUpdate').html(bad.name + ' attacked you back for ' + bad.counterAttack + ' damage.')
@@ -146,9 +197,10 @@ $(document).ready(function(){
 				}else if ($('#enemies').has('div').length == 0 && $('defender').has('div').length ==0) {
 					$('#attackUpdate').empty()
 					$('#counterUpdate').empty()
-					$('#' + bad.identity).remove()
+					$('#' + bad.identity).hide()
 					$('#defender').append('<p>You won!!!! GAME OVER!!!!!</p>')
 					$('.container').append('<button id="resetButton" value="reset">Reset</button>')
+					$('#attackButton').prop("disabled",true)
 				}
 
 				if (bad.hp > 0){
@@ -163,9 +215,16 @@ $(document).ready(function(){
 				//console.log(good.attack)
 				//console.log(bad.hp)
 			}
+		}else if (inputB == 'reset') {
+			console.log('reset button press detected')
+			reset()
 		}else {
 			$('#attackUpdate').html('No enemy here.')
 		}
+	})
+	$('#resetButton').on('click', function(event) {
+		console.log('reset button click detected in separate listener')
+		reset()
 	})
 })
 
