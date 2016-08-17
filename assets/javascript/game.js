@@ -116,9 +116,14 @@ $(document).ready(function(){
 				$('#defender').append('<p>You have been defeated...GAME OVER</p>')
 				$('#defender').append('<button id="resetButton" value="reset">Reset</button>')
 			}else if (bad.hp <=0) {
-				$('#defender').remove('#' + bad.identity)
+				$('#attackUpdate').empty()
+				$('#counterUpdate').empty()
+				$('#' + bad.identity).remove()
 				$('#defender').append('<p>You have defeated ' + bad.name + ', you can choose to fight another enemey</p>')
 			}else {
+				$('#attackUpdate').html('<p>You attacked ' + bad.name + ' for ' + good.attack + ' damage.</p>')
+				$('#counterUpdate').html('<p>' + bad.name + ' attacked you back for ' + bad.counterAttack + ' damage.</p>')
+				
 				good.attackEnemy(bad)
 				bad.counterPlayer(good)
 
