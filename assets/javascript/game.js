@@ -119,22 +119,16 @@ function reset() {
 	darthMaul.attack = 5
 	darthMaul.enemy = true
 
-	// $('#obiWanKenobe-hp').html(obiWanKenobe.hp)
-	// $('#lukeSkywalker-hp').html(lukeSkywalker.hp)
-	// $('#darthSidious-hp').html(darthSidious.hp)
-	// $('#darthMaul-hp').html(darthMaul.hp)
-
-	runGame()
-}
-
-function runGame() {
-	//code for displaying the hp for each character in the html initally
-	$('#resetButton').hide()
 	$('#obiWanKenobe-hp').html(obiWanKenobe.hp)
 	$('#lukeSkywalker-hp').html(lukeSkywalker.hp)
 	$('#darthSidious-hp').html(darthSidious.hp)
 	$('#darthMaul-hp').html(darthMaul.hp)
 
+	runGame()
+}
+
+function runGame() {
+	//contains the onclick events
 	$('img').on('click', function(event){
 		console.log($(event.target).parent().attr('id'))
 		//when image is clicked, stores the id of the div container in input
@@ -167,8 +161,8 @@ function runGame() {
 			var bad = eval($('#defender div').first().attr('id'))
 			//checks if your character has an hp left; if not you lose
 			if (good.hp <= 0) {
-				$('#attackUpdate').remove()
-				$('#counterUpdate').remove()
+				$('#attackUpdate').empty()
+				$('#counterUpdate').empty()
 				$('#defender').append('<p>You have been defeated...GAME OVER</p>')
 				$('#resetButton').show()
 			//checks if the enemy has an hp; if not tells you you defeated them and removes the character from the defender div
@@ -191,10 +185,11 @@ function runGame() {
 				$('#counterUpdate').html(bad.name + ' attacked you back for ' + bad.counterAttack + ' damage.')
 				
 				good.attackEnemy(bad)
+				console.log('does it repeat the hit twice? line 188')
 				
 				if (good.hp <= 0) {
-					$('#attackUpdate').remove()
-					$('#counterUpdate').remove()
+					$('#attackUpdate').empty()
+					$('#counterUpdate').empty()
 					$('#defender').append('<p>You have been defeated...GAME OVER</p>')
 					$('#resetButton').show()
 				}else if (bad.hp <=0) {
@@ -226,7 +221,8 @@ function runGame() {
 		}else if (inputB == 'reset') {
 			console.log('reset button press detected')
 			reset()
-		}else {
+		}else if (inputB == 'attack' && $('#defender').has('div').length == 0) {
+			$('#defeatedMessage').empty()
 			$('#attackUpdate').html('No enemy here.')
 		}
 	})
@@ -239,6 +235,12 @@ function runGame() {
 
 
 $(document).ready(function(){
+	//code for displaying the hp for each character in the html initally
+	$('#resetButton').hide()
+	$('#obiWanKenobe-hp').html(obiWanKenobe.hp)
+	$('#lukeSkywalker-hp').html(lukeSkywalker.hp)
+	$('#darthSidious-hp').html(darthSidious.hp)
+	$('#darthMaul-hp').html(darthMaul.hp)
 	runGame()
 })
 
