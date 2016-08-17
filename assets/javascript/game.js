@@ -98,42 +98,73 @@ $(document).ready(function(){
 		input = $(event.target).parent().attr('id')
 		console.log(input)
 		if (obiWanKenobe.enemy == true && lukeSkywalker.enemy == true && darthSidious.enemy == true && darthMaul.enemy == true) {
+			$('#attackUpdate').empty()
+			$('#counterUpdate').empty()
 			selectCharacter(input)
 		}else if ((obiWanKenobe.enemy == false || lukeSkywalker.enemy == false || darthSidious.enemy == false || darthMaul.enemy == false) && $('#defender').has('img').length == 0) {
-			console.log('in the select enemy block')
+			// console.log('in the select enemy block')
+			$('#attackUpdate').empty()
+			$('#counterUpdate').empty()
 			selectEnemy(input)
+			$('#defeatedMessage').remove()
 		}
 	})
 	$('button').on('click', function(event){
 		inputB = event.target.value
-		console.log('button clicked')
-		console.log(inputB)
-		console.log(event.target.id)
-		if (inputB == 'attack'){
+		// console.log('button clicked')
+		// console.log(inputB)
+		// console.log(event.target.id)
+		if (inputB == 'attack' && $('#defender').has('div').length > 0){
 			var good = eval($('#your-character div').first().attr('id'))
 			var bad = eval($('#defender div').first().attr('id'))
 			if (good.hp <= 0) {
+				$('#attackUpdate').remove()
+				$('#counterUpdate').remove()
 				$('#defender').append('<p>You have been defeated...GAME OVER</p>')
 				$('#defender').append('<button id="resetButton" value="reset">Reset</button>')
 			}else if (bad.hp <=0) {
 				$('#attackUpdate').empty()
 				$('#counterUpdate').empty()
 				$('#' + bad.identity).remove()
-				$('#defender').append('<p>You have defeated ' + bad.name + ', you can choose to fight another enemey</p>')
+				$('#defender').append('<p id="defeatedMessage">You have defeated ' + bad.name + ', you can choose to fight another enemey</p>')
 			}else {
-				$('#attackUpdate').html('<p>You attacked ' + bad.name + ' for ' + good.attack + ' damage.</p>')
-				$('#counterUpdate').html('<p>' + bad.name + ' attacked you back for ' + bad.counterAttack + ' damage.</p>')
+				$('#attackUpdate').html('You attacked ' + bad.name + ' for ' + good.attack + ' damage.')
+				$('#counterUpdate').html(bad.name + ' attacked you back for ' + bad.counterAttack + ' damage.')
 				
 				good.attackEnemy(bad)
-				bad.counterPlayer(good)
+				
+				if (good.hp <= 0) {
+					$('#attackUpdate').remove()
+					$('#counterUpdate').remove()
+					$('#defender').append('<p>You have been defeated...GAME OVER</p>')
+					$('.container').append('<button id="resetButton" value="reset">Reset</button>')
+				}else if (bad.hp <=0) {
+					$('#attackUpdate').empty()
+					$('#counterUpdate').empty()
+					$('#' + bad.identity).remove()
+					$('#defender').append('<p id="defeatedMessage">You have defeated ' + bad.name + ', you can choose to fight another enemey</p>')
+				}else if ($('#enemies').has('div').length == 0 && $('defender').has('div').length ==0) {
+					$('#attackUpdate').empty()
+					$('#counterUpdate').empty()
+					$('#' + bad.identity).remove()
+					$('#defender').append('<p>You won!!!! GAME OVER!!!!!</p>')
+					$('.container').append('<button id="resetButton" value="reset">Reset</button>')
+				}
 
-				$('#' + good.identity + '-hp').html(good.hp)
-				$('#' + bad.identity + '-hp').html(bad.hp)
+				if (bad.hp > 0){
+					bad.counterPlayer(good)
+					$('#' + good.identity + '-hp').html(good.hp)
+					$('#' + bad.identity + '-hp').html(bad.hp)
+				}
 
-				console.log(good.hp)
-				console.log(good.attack)
-				console.log(bad.hp)
+				
+
+				//console.log(good.hp)
+				//console.log(good.attack)
+				//console.log(bad.hp)
 			}
+		}else {
+			$('#attackUpdate').html('No enemy here.')
 		}
 	})
 })
