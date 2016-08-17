@@ -88,6 +88,7 @@ function selectEnemy(input){
 
 function reset() {
 	console.log('reset function has begun')
+	$('#select').empty()
 	$('#your-character').empty()
 	$('#enemies').empty()
 	$('#attackButton').prop("disabled",false)
@@ -98,9 +99,9 @@ function reset() {
 	$('#select').append('<div id="obiWanKenobe" class="character"><p>Obi-Wan Kenobe</p><img src="./assets/images/obiwan.jpg" alt="Obi-Wan Kenobe image"><p id="obiWanKenobe-hp"></p></div>')
 	$('#select').append('<div id="lukeSkywalker" class="character"><p>Luke Skywalker</p><img src="./assets/images/skywalker.jpeg" alt="Luke Skywalker image"><p id="lukeSkywalker-hp"></p></div>')
 	$('#select').append('<div id="darthSidious" class="character"><p>Darth Sidious</p><img src="./assets/images/sidious.jpg" alt="Darth Sidious image"><p id="darthSidious-hp"></p></div>')
-	$('select').append('<div id="darthMaul" class="character"><p>Darth Maul</p><img src="./assets/images/maul.jpeg" alt="Darth Maul image"><p id="darthMaul-hp"></p></div>')
+	$('#select').append('<div id="darthMaul" class="character"><p>Darth Maul</p><img src="./assets/images/maul.jpeg" alt="Darth Maul image"><p id="darthMaul-hp"></p></div>')
 
-	$('#resetButton').remove()
+	$('#resetButton').hide()
 
 	obiWanKenobe.hp = 120
 	obiWanKenobe.attack = 8
@@ -117,11 +118,18 @@ function reset() {
 	darthMaul.hp = 180
 	darthMaul.attack = 5
 	darthMaul.enemy = true
+
+	// $('#obiWanKenobe-hp').html(obiWanKenobe.hp)
+	// $('#lukeSkywalker-hp').html(lukeSkywalker.hp)
+	// $('#darthSidious-hp').html(darthSidious.hp)
+	// $('#darthMaul-hp').html(darthMaul.hp)
+
+	runGame()
 }
 
-
-$(document).ready(function(){
+function runGame() {
 	//code for displaying the hp for each character in the html initally
+	$('#resetButton').hide()
 	$('#obiWanKenobe-hp').html(obiWanKenobe.hp)
 	$('#lukeSkywalker-hp').html(lukeSkywalker.hp)
 	$('#darthSidious-hp').html(darthSidious.hp)
@@ -162,7 +170,7 @@ $(document).ready(function(){
 				$('#attackUpdate').remove()
 				$('#counterUpdate').remove()
 				$('#defender').append('<p>You have been defeated...GAME OVER</p>')
-				$('.container').append('<button id="resetButton" value="reset">Reset</button>')
+				$('#resetButton').show()
 			//checks if the enemy has an hp; if not tells you you defeated them and removes the character from the defender div
 			}else if (bad.hp <=0) {
 				$('#attackUpdate').empty()
@@ -175,7 +183,7 @@ $(document).ready(function(){
 					$('#counterUpdate').empty()
 					$('#' + bad.identity).hide()
 					$('#defender').append('<p>You won!!!! GAME OVER!!!!!</p>')
-					$('.container').append('<button id="resetButton" value="reset">Reset</button>')
+					$('#resetButton').show()
 					$('#attackButton').prop("disabled",true)
 			//otherwise, the attack functionality will run
 			}else {
@@ -188,7 +196,7 @@ $(document).ready(function(){
 					$('#attackUpdate').remove()
 					$('#counterUpdate').remove()
 					$('#defender').append('<p>You have been defeated...GAME OVER</p>')
-					$('.container').append('<button id="resetButton" value="reset">Reset</button>')
+					$('#resetButton').show()
 				}else if (bad.hp <=0) {
 					$('#attackUpdate').empty()
 					$('#counterUpdate').empty()
@@ -199,7 +207,7 @@ $(document).ready(function(){
 					$('#counterUpdate').empty()
 					$('#' + bad.identity).hide()
 					$('#defender').append('<p>You won!!!! GAME OVER!!!!!</p>')
-					$('.container').append('<button id="resetButton" value="reset">Reset</button>')
+					$('#resetButton').show()
 					$('#attackButton').prop("disabled",true)
 				}
 
@@ -222,9 +230,15 @@ $(document).ready(function(){
 			$('#attackUpdate').html('No enemy here.')
 		}
 	})
-	$('#resetButton').on('click', function(event) {
-		console.log('reset button click detected in separate listener')
-		reset()
-	})
+	// $('#resetButton').on('click', function(event) {
+	// 	console.log('reset button click detected in separate listener')
+	// 	reset()
+	// })
+}
+
+
+
+$(document).ready(function(){
+	runGame()
 })
 
