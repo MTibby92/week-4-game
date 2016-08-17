@@ -92,6 +92,7 @@ function reset() {
 	$('#your-character').empty()
 	$('#enemies').empty()
 	$('#attackButton').prop("disabled",false)
+	$('#options').empty()
 	$('#defender').empty()
 	$('#attackUpdate').empty()
 	$('#counterUpdate').empty()
@@ -100,6 +101,9 @@ function reset() {
 	$('#select').append('<div id="lukeSkywalker" class="character"><p>Luke Skywalker</p><img src="./assets/images/skywalker.jpeg" alt="Luke Skywalker image"><p id="lukeSkywalker-hp"></p></div>')
 	$('#select').append('<div id="darthSidious" class="character"><p>Darth Sidious</p><img src="./assets/images/sidious.jpg" alt="Darth Sidious image"><p id="darthSidious-hp"></p></div>')
 	$('#select').append('<div id="darthMaul" class="character"><p>Darth Maul</p><img src="./assets/images/maul.jpeg" alt="Darth Maul image"><p id="darthMaul-hp"></p></div>')
+
+	$('#options').append('<h2>Fight Section</h2>')
+	$('#options').append('<button id="attackButton" value="attack">Attack</button>')
 
 	$('#resetButton').hide()
 
