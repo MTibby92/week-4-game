@@ -144,7 +144,7 @@ function runGame() {
 			$('#counterUpdate').empty()
 			selectCharacter(input)
 		//checks if there is a character selected and if the defender div is empty; if so allows you to select an enemy to fight
-		}else if ((obiWanKenobe.enemy == false || lukeSkywalker.enemy == false || darthSidious.enemy == false || darthMaul.enemy == false) && $('#defender').has('img').length == 0) {
+		}else if ((obiWanKenobe.enemy == false || lukeSkywalker.enemy == false || darthSidious.enemy == false || darthMaul.enemy == false) && $('#defender').has('img').length == 0 && eval(input).enemy == true) {
 			// console.log('in the select enemy block')
 			$('#attackUpdate').empty()
 			$('#counterUpdate').empty()
