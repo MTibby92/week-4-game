@@ -167,8 +167,9 @@ function runGame() {
 			if (good.hp <= 0) {
 				$('#attackUpdate').empty()
 				$('#counterUpdate').empty()
-				$('#defender').append('<p>You have been defeated...GAME OVER</p>')
+				$('#defender').append('<p id ="youWon">You have been defeated...GAME OVER</p>')
 				$('#resetButton').show()
+				$('#attackButton').prop("disabled",true)
 			//checks if the enemy has an hp; if not tells you you defeated them and removes the character from the defender div
 			}else if (bad.hp <=0) {
 				$('#attackUpdate').empty()
@@ -190,12 +191,13 @@ function runGame() {
 				
 				good.attackEnemy(bad)
 				console.log('does it repeat the hit twice? line 188')
-				
+
 				if (good.hp <= 0) {
 					$('#attackUpdate').empty()
 					$('#counterUpdate').empty()
-					$('#defender').append('<p>You have been defeated...GAME OVER</p>')
+					$('#defender').append('<p id ="youWon">You have been defeated...GAME OVER</p>')
 					$('#resetButton').show()
+					$('#attackButton').prop("disabled",true)
 				}else if (bad.hp <=0) {
 					$('#attackUpdate').empty()
 					$('#counterUpdate').empty()
@@ -212,11 +214,19 @@ function runGame() {
 
 				if (bad.hp > 0){
 					bad.counterPlayer(good)
-					$('#' + good.identity + '-hp').html(good.hp)
-					$('#' + bad.identity + '-hp').html(bad.hp)
+					if (good.hp <= 0) {
+						$('#' + good.identity + '-hp').html(good.hp)
+						$('#' + bad.identity + '-hp').html(bad.hp)
+						$('#attackUpdate').empty()
+						$('#counterUpdate').empty()
+						$('#defender').append('<p id="youWon">You have been defeated...GAME OVER</p>')
+						$('#resetButton').show()
+						$('#attackButton').prop("disabled",true)
+					}else {
+						$('#' + good.identity + '-hp').html(good.hp)
+						$('#' + bad.identity + '-hp').html(bad.hp)
+					}
 				}
-
-				
 
 				//console.log(good.hp)
 				//console.log(good.attack)
