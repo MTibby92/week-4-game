@@ -203,7 +203,7 @@ function runGame() {
 					$('#counterUpdate').empty()
 					$('#' + bad.identity).remove()
 					$('#defender').append('<p id="defeatedMessage">You have defeated ' + bad.name + ', you can choose to fight another enemey</p>')
-				}else if ($('#enemies').has('div').length == 0 && $('defender').has('div').length ==0) {
+				}else if ($('#enemies').has('div').length == 0 && $('#defender').has('div').length ==0) {
 					$('#attackUpdate').empty()
 					$('#counterUpdate').empty()
 					$('#' + bad.identity).hide()
