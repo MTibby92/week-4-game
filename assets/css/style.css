@@ -1,5 +1,6 @@
 .container {
-
+	margin-left: 3px;
+	line-height: 1.5;
 }
 
 h1 {
@@ -11,7 +12,7 @@ h1 {
 	flex-wrap: wrap;
 	flex-flow: row;
 	align-content: flex-start;
-
+	margin-bottom: 6px;
 }
 
 #your-character {
@@ -19,6 +20,7 @@ h1 {
 	flex-wrap: wrap;
 	flex-flow: row;
 	align-content: flex-start;
+	margin-bottom: 6px;
 }
 
 #enemies {
@@ -26,6 +28,7 @@ h1 {
 	flex-wrap: wrap;
 	flex-flow: row;
 	align-content: flex-start;
+	margin-bottom: 6px;
 }
 
 #options {
@@ -37,8 +40,29 @@ h1 {
 	flex-wrap: wrap;
 	flex-flow: column;
 	align-content: flex-start;
+	margin-bottom: 6px;
 }
 
 .character {
 	margin-right: 30px;
+	border: 2px green solid;
+	width: 150px;
+	height: 170px;
+	text-align: center;
+	overflow: hidden;
+}
+
+.character img {
+	width: 77%;
+	height: auto;
+}
+
+#enemies .character {
+	background-color: red;
+	border-color: black;
+}
+
+#defender .character {
+	background-color: black;
+	color: white;
 }

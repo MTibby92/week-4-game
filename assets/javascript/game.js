@@ -203,6 +203,16 @@ function runGame() {
 					$('#counterUpdate').empty()
 					$('#' + bad.identity).remove()
 					$('#defender').append('<p id="defeatedMessage">You have defeated ' + bad.name + ', you can choose to fight another enemey</p>')
+
+					if ($('#enemies').has('div').length == 0 && $('#defender').has('div').length ==0) {
+						$('#attackUpdate').empty()
+						$('#counterUpdate').empty()
+						$('#defeatedMessage').empty()
+						$('#' + bad.identity).hide()
+						$('#defender').append('<p>You won!!!! GAME OVER!!!!!</p>')
+						$('#resetButton').show()
+						$('#attackButton').prop("disabled",true)
+					}
 				}else if ($('#enemies').has('div').length == 0 && $('#defender').has('div').length ==0) {
 					$('#attackUpdate').empty()
 					$('#counterUpdate').empty()
